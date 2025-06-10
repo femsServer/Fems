@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sis.fems.a.mapper.LogMapper">
+
+    <insert id="insertLog">
+        INSERT INTO fems_a.tb_system_log(err_code, err_comment)
+        VALUES(#{errCode}, #{errComment})
+    </insert>
+
+</mapper>

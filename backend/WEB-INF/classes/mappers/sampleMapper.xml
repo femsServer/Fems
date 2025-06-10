@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iot.sample.mappers.sampleMapper">
+
+    <select id="selectData" resultType="com.iot.sample.dto.sampleDTO">
+        SELECT
+         *
+        FROM sample_api.menuapi
+    </select>
+
+    <select id="selectFilteredData" parameterType = "hashmap" resultType="com.iot.sample.dto.sampleDTO">
+        SELECT
+         *
+        FROM sample_api.menuapi
+
+        WHERE 1=1
+            AND TYPE like #{type}
+            AND TASTE like #{taste}
+        ORDER BY id;
+    </select>
+
+    <insert id="insertData" parameterType="hashmap">
+    INSERT INTO sample_api.menuapi
+    (
+     restaurant,
+     name,
+     price,
+     type,
+     taste
+     )
+    VALUES
+    (
+     #{restaurant},
+     #{name},
+     #{price},
+     #{type},
+     #{taste}
+    )
+     </insert>
+
+    <update id="updateData" parameterType="hashmap">
+        UPDATE sample_api.menuapi SET
+            restaurant = #{restaurant},
+            name = #{name},
+            price = #{price},
+            type = #{type},
+            taste  = #{taste}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteData" parameterType="hashmap">
+        DELETE FROM sample_api.menuapi
+        WHERE id = #{id}
+    </delete>
+    
+    <select id="getAllMenus" resultType="com.iot.sample.dto.menuDTO">
+        SELECT
+         * 
+        FROM sample_api.dropmenuapi
+        WHERE name != '홈'
+    </select>
+
+    <!-- 기존 데이터 조회 -->
+    <select id="selectExistingData" resultType="com.iot.sample.dto.sampleDTO">
+        SELECT * FROM sample_api.menuapi
+    </select>
+
+    <!-- 배치 Insert -->
+    <insert id="batchInsertSample" parameterType="list">
+
+        INSERT INTO sample_api.menuapi
+            (restaurant, name, price, type, taste)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.restaurant}, #{item.name}, #{item.price}, #{item.type}, #{item.taste})
+        </foreach>
+    </insert>
+
+    <!-- 배치 Update -->
+    <update id="batchUpdateSample" parameterType="list">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE sample_api.menuapi
+                restaurant = #{item.restaurant},
+                name = #{item.name},
+                price = #{item.price},
+                type = #{item.type},
+                taste  = #{item.taste}
+            WHERE id = #{item.id}
+        </foreach>
+    </update>
+
+ </mapper>

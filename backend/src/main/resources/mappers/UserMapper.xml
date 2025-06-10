@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sis.fems.a.mapper.UserMapper">
+
+    <!--  사용자 조회   -->
+    <select id="getUserList" resultType="com.sis.fems.a.dto.UserDTO">
+        SELECT
+            user_id AS userId,
+            user_name AS userName,
+            email,
+            phone,
+            role_level AS roleLevel,
+            use_yn AS useYn
+        FROM a.tb_user_info
+    </select>
+
+    <!--  사용자 등록   -->
+    <insert id="insertUser" parameterType="com.sis.fems.a.dto.UserDTO">
+            INSERT INTO a.tb_user_info (
+            user_id,
+            user_pw,
+            user_name,
+            phone,
+            email,
+            role_level,
+            use_yn,
+            insertdate,
+            lastupdate,
+            worker
+        )
+        VALUES (
+            #{userId},
+            #{userPw},
+            #{userName},
+            #{phone},
+            #{email},
+            #{roleLevel},
+            #{useYn},
+            NOW(),
+            NOW(),
+            'SYSTEM'
+        )
+    </insert>
+
+    <!--  사용자 삭제   -->
+    <delete id="deleteUser" parameterType="com.sis.fems.a.dto.UserDTO">
+        DELETE FROM a.tb_user_info
+        WHERE user_id = #{userId}
+    </delete>
+
+</mapper>
