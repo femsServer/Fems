@@ -16,18 +16,23 @@ public class UserController {
     private final UserService userService;
 
     // 사용자 목록 조회
-    @GetMapping("/list")
+    @GetMapping
     public ResponseEntity<List<UserDTO>> getUserList() {
         List<UserDTO> users = userService.getUserList();
         return ResponseEntity.ok(users);
     }
-
-    @PostMapping("/register")
+    
+    // 사용자 등록
+    @PostMapping
     public ResponseEntity<?> registerUser(@RequestBody UserDTO user) {
         userService.registerUser(user);
         return ResponseEntity.ok("사용자 등록 완료");
     }
-    @PostMapping("/delete")
+
+    //사용자 수정
+
+    // 사용자 삭제
+    @DeleteMapping
     public ResponseEntity<?> deleteUser(@RequestBody UserDTO user) {
         userService.deleteUser(user);
         return ResponseEntity.ok("사용자 삭제 완료");
